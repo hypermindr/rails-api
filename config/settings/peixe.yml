@@ -1,0 +1,61 @@
+sidekiq:
+    redis: smiths.hypermindr.com:6379
+
+barbante:
+  default:
+    protocol: http
+    host: localhost
+    port: 8889
+    versioned_url: false
+  cluster:
+    protocol: http
+    host: barbante.hypermindr.com
+    port: 80
+    versioned_url: true
+    autoscaling_group: barbante-cluster
+
+tracking:
+    cookie_domain: .peixeurbano.com.br
+    cookie_secure: false
+    debug_mode: false
+    log_impressions: true
+    api_version: v2
+    api_endpoint_host: peixe.hypermindr.com
+    impression_endpoint_host: impress.peixe.hypermindr.com
+
+activity:
+    process_after_save: true
+    process_rollout: false
+    process_user_language: false
+    process_recommendation_enabled: false
+    process_recommendation_enabled_activities:
+        - browse
+    process_product_language: false
+    process_product_required_activities:
+        - view
+        - cart
+        - buy
+    process_create_product: false
+    process_create_user: false
+    kinesis: false
+
+product:
+    process_after_save: true
+    fetch_url_content: false
+    fetch_content_language: false
+    view_activitiy: view
+    fields:
+        title: resource.ultra_brief_description
+        short_content: resource.title
+        source: resource.partner.name
+        date: created_at
+        url: resource.canonical_url
+        image: resource.images.0.image
+
+
+user:
+    ab_testing: true
+    ab_groups:
+        - A
+        - B
+

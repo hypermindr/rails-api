@@ -1,0 +1,5 @@
+.row-fluid
+	.span4
+		-templates.each do |template|
+			.well.well-small.well-with-counter.template-well
+				= link_to template.external_id, user_path(template.id)

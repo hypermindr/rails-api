@@ -1,0 +1,23 @@
+= javascript_include_tag "//www.google.com/jsapi", "chartkick"  
+.row-fluid
+	.span12
+		- unless params[:layout]=='false'
+			%h1 User Detail
+
+		= render partial: "user_detail", locals: {user: @user}
+
+%ul.nav.nav-tabs
+	%li.active= link_to "Recommendations", "#recommendations-#{@user.id}", {"data-toggle"=>"tab"}
+	%li= link_to "Activity", "#activity-#{@user.id}", {"data-toggle"=>"tab"}
+	%li= link_to "Templates", "#templates-#{@user.id}", {"data-toggle"=>"tab"}
+		
+.tab-content
+	.tab-pane.active{id: "recommendations-#{@user.id}"}
+		= render partial: "user_recommendations", locals: {user: @user, algorithms: @algorithms, recommendations: @recommendations, templates: @templates, endpoints: @endpoints}
+	.tab-pane{id: "activity-#{@user.id}"}
+		= render partial: "user_activities", locals: {activities: @activities}
+	.tab-pane{id: "templates-#{@user.id}"}
+		= render partial: "user_templates", locals: {user: @user, templates: @templates}
+
+.row-fluid
+	.span2

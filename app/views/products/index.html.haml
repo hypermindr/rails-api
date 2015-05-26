@@ -1,0 +1,32 @@
+%h1 Articles
+
+
+%table.table.table-striped.table-hover
+  %tr
+    %th ID
+    %th status
+    %th created_at
+    %th resource
+  - @products.each do |product|
+    %tr
+      %td= product.external_id
+      %td= product.status
+      %td= product.created_at.strftime("%F %T")
+      %td
+        - if product.resource
+          %a{name: product.id}
+          = link_to '+resource', "##{product.id}", :onclick => "show_resource('#{product.id}')"
+          %div.hidden{id: product.id}
+            %pre= JSON.pretty_generate(product.resource)
+
+
+%ul
+  %li= "page: #{@page}"
+  %li=link_to 'next', products_path(page: @next)
+  - if @previous
+    %li=link_to 'previous', products_path(page: @previous)
+
+:javascript
+  function show_resource(id){
+    $('#'+id).toggleClass('hidden');
+  }

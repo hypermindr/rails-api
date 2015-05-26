@@ -1,0 +1,26 @@
+%h1 Clients
+
+%p= link_to 'New Client', new_client_path, class: 'btn'
+
+%table.table.table-striped
+  %tr
+    %th Name
+    %th Domain
+    %th Status
+    %th Apikey
+    %th
+
+  - @clients.each do |client|
+    - label = client.status=='active' ? 'label label-success' : 'label'
+    %tr
+      %td= link_to client.name, client
+      %td= client.domain_name
+      %td
+        %span{class: label}= client.status
+      %td= client.apikey
+      %td
+        = link_to edit_client_path(client), class: 'btn btn-warning' do
+          %i.icon-pencil.icon-white
+        = link_to client, :method => :delete, class: 'btn btn-danger', :data => { :confirm => 'Are you sure?' } do
+          %i.icon-white.icon-remove
+

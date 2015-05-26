@@ -1,0 +1,7 @@
+# don't save any default settings because rails_config gem has a bug where environmnet settings don't override default settings.
+# https://github.com/railsconfig/rails_config/issues/78
+
+aws:
+  access_key_id:  XXXXXXXXXXXXXX
+  secret_access_key: xxxxxxxxxxxxxxxxxxxxxxx
+  region: us-east-1

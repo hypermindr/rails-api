@@ -1,0 +1,92 @@
+{
+  "indexes" : {
+    "activities" : [
+      { "key" : {"anonymous":1.0,"external_user_id":1.0,"created_at":-1.0,"activity":1.0,"external_product_id":1.0}},
+      { "key" : {"anonymous":1.0,"external_product_id":1.0,"created_at":-1.0,"activity":1.0,"external_user_id":1.0}},
+      { "key" : {"anonymous" : 1.0, "created_at" : 1.0}}
+    ],
+    "clients" : [
+      { "key" : {"_slugs" : 1}, "unique" : true }
+    ],
+    "impressions" : [
+      { "key" : {"anonymous" : 1,"external_user_id" : 1, "created_at" : -1, "external_product_id" : 1}},
+      { "key" : {"anonymous" : 1,"external_product_id" : 1, "created_at" : -1, "external_user_id" : 1}}
+    ],
+    "products" : [
+      { "key" : {"external_id" : 1}, "unique" : true, "dropDups" : true},
+      { "key" : {"external_id" : 1, "deleted_on" : -1}},
+      { "key" : {"deleted_on" : 1}},
+      { "key" : {"date" : 1, "deleted_on" : -1}}
+    ],
+    "users" : [
+      { "key" : {"external_id" : 1}, "unique" : true, "dropDups" : true},
+      { "key" : {"anonymous" : 1, "external_id" : 1}}
+    ]
+  },
+  "ignore_collections" : [
+    "pp_strengths",
+    "uu_strengths",
+    "product_models",
+    "user_model",
+    "user_user_strengths",
+    "user_user_numerators",
+    "user_user_denominators",
+    "user_user_strengths_temp",
+    "product_product_strengths",
+    "product_product_numerators",
+    "product_product_denominators",
+    "product_product_strengths_temp",
+    "chambs_items",
+    "fs.files",
+    "fs.chunks",
+    "activities_summary",
+    "df",
+    "impressions_summary",
+    "maintenance",
+    "popularities_summary",
+    "product_models",
+    "product_product_strengths_tfidf",
+    "product_terms",
+    "tfidf"
+  ]
+}
+
+/*
+"activities_summary" : [
+{ "key" : {"external_user_id": 1, "external_product_id": 1, "day": -1, "activity": 1}},
+{ "key" : {"external_user_id": 1, "day": -1, "activity": 1, "external_product_id": 1}},
+{ "key" : {"external_product_id": 1, "day": -1, "activity": 1, "external_user_id": 1}}
+],
+
+    "df" : [
+      { "key" : {"language" : 1, "term" : 1 , "df" : -1 }}
+    ],
+
+    "impressions_summary": [
+      { "key" : {"u_id": 1, "p_id": 1, "count": 1, "first": -1}},
+      { "key" : {"p_id": 1, "u_id": 1, "count": 1, "first": -1}}
+    ],
+    "maintenance" : [
+      { "key" : {"type" : 1, "timestamp" : -1, "cutoff_date" : -1}}
+    ],
+    "popularities_summary" : [
+      { "key" : {"p_id" : 1, "count" : 1, "first": -1, "latest" : -1}},
+      { "key" : {"latest" : -1, "p_id" : 1, "popularity" : -1}}
+    ],
+    "product_models" : [
+      { "key" : {"external_product_id" : 1}}
+    ],
+    "product_product_strengths_tfidf" : [
+      { "key" : {"product" : 1, "template_product" : 1, "strength" : -1}},
+      { "key" : {"product" : 1, "strength" : -1, "template_product" : 1}}
+    ],
+    "product_terms" : [
+      { "key" : {"attribute" : 1, "external_product_id" : 1, "term" : 1, "count" : 1}},
+      { "key" : {"attribute" : 1, "term" : 1, "external_product_id" : 1, "count" : 1}}
+    ],
+    "tfidf" : [
+      { "key" : {"attribute" : 1, "external_product_id" : 1, "term" : 1, "tfidf" : -1 }},
+      { "key" : {"attribute" : 1, "term" : 1, "external_product_id" : 1, "tfidf" : -1 }}
+    ],
+
+*/

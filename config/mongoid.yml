@@ -1,0 +1,58 @@
+development:
+  sessions:
+    default:
+      database: api_development
+      hosts:
+        - localhost:27017
+      options:
+        read: :secondary_preferred
+        max_retries: 10
+        retry_interval: 1
+        pool_size: 35
+  options:
+    raise_not_found_error: false
+    use_activesupport_time_zone: true
+    use_utc: false
+test:
+  sessions:
+    default:
+      database: api_test
+      hosts:
+        - localhost:27017
+      options:
+        read: primary
+        max_retries: 1
+        retry_interval: 0
+        pool_size: 35
+  options:
+    raise_not_found_error: false
+
+staging:
+  sessions:
+    default:
+      database: api_peixe
+      hosts:
+        - richards.hypermindr.com:27017
+      options:
+        read: primary
+        max_retries: 1
+        retry_interval: 0
+        pool_size: 35
+  options:
+    raise_not_found_error: false
+
+
+peixe:
+  sessions:
+    default:
+      database: api_peixe
+      hosts:
+        - doobie.hypermindr.com:27017
+      options:
+        read: :primary
+        max_retries: 10
+        retry_interval: 1
+        pool_size: 35
+  options:
+    raise_not_found_error: false
+

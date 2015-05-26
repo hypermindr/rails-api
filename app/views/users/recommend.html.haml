@@ -1,0 +1,55 @@
+%h1 Recommendation
+= javascript_include_tag "//www.google.com/jsapi", "chartkick"  
+
+%ul.nav.nav-tabs{id: 'user-tabs'}
+	- @users.each_with_index do |user,ix|
+		%li
+			= link_to user, recommend_path(external_id: user, layout: false), {"data-toggle"=>"tab", class: "main-tab-item", remote: true, 'data-target' => "#tab-#{ix}"}
+
+.tab-content
+	- @users.each_with_index do |user,ix|
+		.tab-pane{id: "tab-#{ix}"}
+
+.hidden
+	.alert
+		= image_tag "loading.gif"
+		Loading...
+
+:javascript
+	$(document).ready(function(){
+		$("#user-tabs").tab();
+		$("#user-tabs").bind("show", function(e) {    
+			var contentID  = $(e.target).attr("data-target");
+			var contentURL = $(e.target).attr("href");
+			$(contentID).prepend($('.hidden').html());
+			if (typeof(contentURL) != 'undefined')
+				$(contentID).load(contentURL, function(){ $("#user-tabs").tab(); });
+			else
+				$(contentID).tab('show');
+		});
+		$('#user-tabs a:first').tab("show");
+	});
+
+
+	var tabChange = function () {
+		var tabs = $('#user-tabs > li');
+		var active = tabs.filter('.active');
+		var next = active.next('li').length ? active.next('li').find('a') : tabs.filter(':first-child').find('a');
+		// Use the Bootsrap tab show method
+		next.tab('show');
+	};
+	// Tab Cycle function
+	var tabCycle = setInterval(tabChange, 10000);
+
+	// Tab click event handler
+	$('#user-tabs a.main-tab-item').on('click', function (e) {
+		e.preventDefault();
+		// Stop the cycle
+		clearInterval(tabCycle);
+		// Show the clicked tabs associated tab-pane
+		$(this).tab('show');
+		// Start the cycle again in a predefined amount of time
+		setTimeout(function () {
+		    //tabCycle = setInterval(tabChange, 10000);
+		}, 30000);
+	});

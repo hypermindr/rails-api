@@ -1,0 +1,15 @@
+
+%table.table.table-bordered
+	%tr
+		%th ID
+		%th External ID
+		%th Location
+		%th Gender
+		%th Algorithm
+	%tr
+		%td= user.id.to_s 
+		%td= user.external_id 
+		%td
+			= "#{user.ipdata['country']} (#{user.ipdata['regionName']})" if user.ipdata
+		%td= user.gender
+		%td= user.algorithm

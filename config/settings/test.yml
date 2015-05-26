@@ -1,0 +1,58 @@
+sidekiq:
+    redis: localhost:6379
+
+barbante:
+  default:
+    protocol: http
+    host: localhost
+    port: 8889
+    versioned_url: false
+  cluster:
+    protocol: http
+    host: localhost
+    port: 8888
+    versioned_url: false
+
+tracking:
+    cookie_domain: .hypermindr.com
+    cookie_secure: false
+    debug_mode: false
+    log_impressions: false
+    api_version: v1
+    api_endpoint_host: localhost:3000
+    impression_endpoint_host: localhost:3000
+
+activity:
+    process_after_save: true
+    process_rollout: false
+    process_user_language: true
+    process_recommendation_enabled: true
+    process_recommendation_enabled_activities:
+        - browse
+        - toggle-recstream
+        - rate-good
+        - rate-bad
+    process_product_language: true
+    process_product_required_activities:
+        - read
+        - read-more
+    process_create_product: true
+    process_create_user: true
+
+product:
+    process_after_save: true
+    fetch_url_content: true
+    fetch_content_language: true
+    view_activitiy: read
+    fields:
+        title: title
+        short_content: short_content
+        source: source
+        date: date
+        url: url
+        image: image
+
+user:
+    ab_testing: true
+    ab_groups:
+        - A

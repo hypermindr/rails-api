@@ -1,0 +1,8 @@
+access_key_id:  XXXXXXXXXXXXXX
+secret_access_key: xxxxxxxxxxxxxxxxxxxxxxx
+
+regions:
+ - us-east-1
+project_tag: Project
+roles_tag: Roles
+stages_tag: Partner

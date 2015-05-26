@@ -1,0 +1,10 @@
+%h1= "API hypermindR #{Rails.env}"
+
+.navbar
+	.navbar-inner
+		%a.brand Activity
+		%ul.nav
+			- {'7' => 'last 7 days', '30' => 'last 30 days', 'year' => 'year to date'}.each do |param, period|
+				- css = @active==param ? 'active' : ''
+				%li{class: css}= link_to period, root_path('interval' => param)
+			%li= link_to 'Environment Settings', environment_path

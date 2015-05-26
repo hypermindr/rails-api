@@ -1,0 +1,27 @@
+development:
+  :concurrency: 1
+staging:
+  :concurrency: 1
+goodnoows:
+  :concurrency: 1
+peixe:
+  :concurrency: 1
+legiao:
+  :concurrency: 1
+
+:queues:
+  - [impression, 1]
+  - [barbante_activity_fastlane, 1]
+  - [product, 1]
+  - [user_activity, 1]
+  - [barbante_activity_slowlane, 1]
+  - [activity, 1]
+  - [user, 1]
+
+
+:limits:
+  barbante_activity_slowlane: 2
+
+
+#:blocking:
+#  - [impression, barbante_activity_fastlane, product, user_activity]

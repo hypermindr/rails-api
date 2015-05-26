@@ -1,0 +1,16 @@
+= simple_form_for @client do |f|
+  - if @client.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@client.errors.count, "error")} prohibited this client from being saved:"
+      %ul
+        - @client.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.input :name
+  = f.input :domain_name, label: 'Allowed domain'
+  = f.input :status, collection: [:active, :inactive]
+  = f.input :feed_url, hint: 'Product feed url'
+
+  .actions
+    = f.submit "Save", :class => 'btn btn-primary submit-button'
+    = link_to "Cancel", clients_path, :class => 'btn'

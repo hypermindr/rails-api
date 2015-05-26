@@ -1,0 +1,29 @@
+%h1 Activity Log
+
+%table.table.table-striped.table-hover
+  %tr
+    %th Date
+    %th Activity
+    %th User
+    %th Session
+    %th Product
+    %th Resource
+  - @activities.each do |activity|
+    %tr
+      %td= activity.created_at.strftime("%F %T")
+      %td= activity.activity
+      %td
+        - if activity.anonymous
+          %i.icon-eye-close
+        -else
+          %i.icon-eye-open
+        = activity.external_user_id
+      %td= activity.session_id
+      %td= activity.external_product_id
+      %td= activity.resource
+
+%ul
+  %li= "page: #{@page}"
+  %li=link_to 'next', activities_path(page: @next)
+  - if @previous
+    %li=link_to 'previous', activities_path(page: @previous)

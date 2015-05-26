@@ -1,0 +1,27 @@
+# Ignore bundler config.
+.bundle
+
+# Ignore all logfiles and tempfiles.
+log/*
+tmp/*
+.hg/*
+.hgignore.bundle
+public/system/dragonfly/*
+public/uploads/*
+coverage
+lib/barbante/build/*
+barbante*.log
+spec/reports/
+
+#ignore ctags file
+.tags
+
+#ignore virtualenv directory
+.pyenv/
+.idea/
+
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml
+config/settings.yml
+config/ec2.yml

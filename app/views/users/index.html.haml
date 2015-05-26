@@ -1,0 +1,24 @@
+%h1 Users
+
+
+%table.table.table-striped.table-hover
+  %tr
+    %th ID
+    %th external_id
+    %th created_at
+    %th algorithm
+    %th ab_group
+  - @users.each do |user|
+    %tr
+      %td= link_to user.id, user_path(user.id)
+      %td= user.external_id
+      %td= user.created_at.strftime("%F %T")
+      %td= user.algorithm
+      %td= user.ab_group
+
+
+%ul
+  %li= "page: #{@page}"
+  %li=link_to 'next', users_path(page: @next)
+  - if @previous
+    %li=link_to 'previous', users_path(page: @previous)

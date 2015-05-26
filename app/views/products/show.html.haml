@@ -1,0 +1,14 @@
+%h1 Article Details
+= javascript_include_tag "//www.google.com/jsapi", "chartkick"  
+
+= @product.title
+%br
+= #get_read_graph(@product.recent_user_count_by_day)
+= #@product.recent_user_count_by_day
+
+- @activities.each do |activity|
+	.well
+		.label= activity.activity
+		= "#{time_ago_in_words(activity.created_at)} ago"
+		by
+		= link_to activity.user.external_id, "/recommend/#{activity.user.id.to_s}"

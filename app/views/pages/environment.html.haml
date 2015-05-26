@@ -1,0 +1,9 @@
+= render partial: "home_header"
+%h3= Rails.env
+%ul
+	- Settings.each do |key,val|
+		%li= key
+		- if val && val.kind_of?(Object)
+			%ul
+				- val.each do |k,v|
+					%li= "#{k}: #{v}"

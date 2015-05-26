@@ -1,0 +1,32 @@
+%h1= @client.name
+
+%p#notice= notice
+
+%dl
+
+  %dt ID
+  %dd= @client.id
+  
+  %dt Allowed Domain:
+  %dd= @client.domain_name
+
+  %dt Slug
+  %dd= @client.slug
+
+  %dt Status:
+  - label = @client.status=='active' ? 'label label-success' : 'label'
+  %dd
+    %span{class: label}= @client.status
+
+  %dt Apikey:
+  %dd= @client.apikey
+
+  %dt Created: 
+  %dd= @client.created_at.to_s
+
+  %dt Last updated: 
+  %dd= @client.updated_at.to_s
+
+= link_to 'Edit', edit_client_path(@client), class: 'btn'
+
+= link_to 'Back', clients_path, class: 'btn'

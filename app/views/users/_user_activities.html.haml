@@ -1,0 +1,12 @@
+- activities.each do |activity|
+	.well.well-small
+		%span.label= activity.activity
+		- if activity.product
+			= activity.product.title 
+			%br
+		%small= "#{time_ago_in_words(activity.created_at)} ago"
+		- if activity.product
+			%br
+			= #get_read_graph(activity.product.recent_user_count_by_day)
+			- if activity.product.deleted_on
+				%span.label.label-important Deleted

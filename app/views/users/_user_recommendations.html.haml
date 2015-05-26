@@ -1,0 +1,23 @@
+- if @filter
+  .row-fluid
+    Filter:
+    = @filter
+
+.row-fluid
+  - algorithms.each do |algorithm|
+    .span2
+      %h3= link_to algorithm, endpoints[algorithm], target: "_blank"
+
+      - recommendations[algorithm].each do |item|
+        .well.well-small.well-with-counter
+          %strong
+            = "#{item[:rank]+1}. "
+            = link_to "#{item[:title]}", item[:url], target: 'blank'
+          %br
+          %span.label= item[:source].truncate(20) if item[:source]
+          %br
+          %small
+            = "published #{time_ago_in_words(Time.at(item[:date]).to_datetime)} ago"
+            %br
+            = "score: #{item[:score].round(3)}" if item[:score].is_a?(Float)
+            = "score: #{item[:score].inspect}" unless item[:score].is_a?(Float)

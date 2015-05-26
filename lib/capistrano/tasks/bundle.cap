@@ -1,0 +1,93 @@
+namespace :deploy do
+  # example execution 'cap bundle_app -s version=HEAD'
+  desc "Bundle code and push to S3"
+  task :bundle_app do
+    run_locally do
+      on roles(:app_primary) do
+        puts "Starting Git archive of api"
+        system "git archive -o api.#{fetch(:stage)}.tar HEAD"
+        system "gzip api.#{fetch(:stage)}.tar"
+      end
+    end
+  end
+
+  desc "Upload file to S3"
+  task :s3_upload do
+
+    filename = "api.#{fetch(:stage)}.tar.gz"
+    settings_filename = "settings.yml"
+    tmp_filename = "tmp.#{fetch(:stage)}.tar.gz"
+    bucket_name = 'hypermindrapi'
+    settings = fetch(:app_settings)
+
+    # Get an instance of the S3 interface.
+    s3 = AWS::S3.new(
+      :access_key_id => settings[:aws][:access_key_id],
+      :secret_access_key => settings[:aws][:secret_access_key])
+
+    # Upload a file.
+    bucket = s3.buckets[bucket_name]
+    print "Uploading #{filename} to bucket #{bucket_name}... "
+    bucket.objects[tmp_filename].write(:file => filename)
+    print "done\n"
+
+    print "Uploading #{settings_filename} to bucket #{bucket_name}... "
+    bucket.objects["tmp.#{settings_filename}"].write(:file => "config/#{settings_filename}")
+    print "done\n"
+
+    # rename old file
+    bucket.objects[filename].move_to("api.#{fetch(:stage)}.#{Time.now.strftime('%Y%m%d.%H%M%S')}.tar.gz")
+    bucket.objects[settings_filename].move_to("#{fetch(:stage)}.settings.#{Time.now.strftime('%Y%m%d.%H%M%S')}.yml")
+
+    # rename new file
+    bucket.objects[tmp_filename].move_to(filename)
+    bucket.objects["tmp.#{settings_filename}"].move_to(settings_filename)
+
+  end
+
+  desc "Clean up old files"
+  task :clean_up do
+    run_locally do
+      puts "Cleaning up"
+      system "rm api.#{fetch(:stage)}.tar.gz"
+      puts "All done!"
+    end
+  end
+
+  desc "upload self deploy script"
+  task :upload_self_deploy do
+    on roles(:app_primary) do
+      filename = "script/self_deploy.sh"
+      bucket_name = "hypermindr-utils"
+      settings = fetch(:app_settings)
+      # Get an instance of the S3 interface.
+      s3 = AWS::S3.new(
+          :access_key_id => settings[:aws][:access_key_id],
+          :secret_access_key => settings[:aws][:secret_access_key])
+
+      # Upload a file.
+      bucket = s3.buckets[bucket_name]
+      print "Uploading #{filename} to bucket #{bucket_name}... "
+      bucket.objects[filename].write(:file => filename)
+      print "done\n"
+    end
+  end
+
+  # desc "Set stage variables"
+  task :set_variables do
+    # Configure app_settings from rails_config
+    # Defer processing until we have rails environment
+    run_locally do
+      stdin, stdout, stderr = Open3.popen3("bundle exec rails runner -e #{fetch(:rails_env, 'staging')} 'p Settings.to_hash'")
+      hash_str = stdout.gets
+      # puts "RESULT: #{response}"
+      set :app_settings, eval(hash_str)
+    end
+
+  end
+
+  before :upload_self_deploy, :set_variables
+  before  :bundle_app, :set_variables
+  after :bundle_app, :s3_upload
+  after :s3_upload, :clean_up
+end

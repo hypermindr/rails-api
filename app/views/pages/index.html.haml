@@ -1,0 +1,41 @@
+= render partial: "home_header"
+= #javascript_include_tag "//www.google.com/jsapi", "chartkick"
+= javascript_include_tag "chartkick"
+
+.container
+  = line_chart @activities, discrete: true, library: {title: {text: 'Activities'}, curveType: 'none', dataOpacity: 0}
+
+- unless Rails.env == 'goodnoows'
+  .container
+    = line_chart @visits_per_user, discrete: true, library: {title: {text: 'Visits per user per week'}, curveType: 'none', dataOpacity: 0}
+
+  .container
+    = line_chart @sales, discrete: true, library: {title: {text: 'Sales'}, curveType: 'none', dataOpacity: 0}
+
+  .container
+    = line_chart @views, discrete: true, library: {title: {text: 'Views'}, curveType: 'none', dataOpacity: 0}
+
+  .container
+    = line_chart @users, discrete: true, library: {title: {text: 'Users'}, curveType: 'none', dataOpacity: 0}
+
+- if ['goodnoows', 'development'].include? Rails.env
+  .container
+    = area_chart @recommended, discrete: true, library: {title: {text: 'Recommended'}, curveType: 'none', dataOpacity: 0, isStacked: true}
+
+  .container
+    = line_chart @algorithms, discrete: true, library: {title: {text: 'Algorithms'}, curveType: 'none', dataOpacity: 0}
+
+  .container
+    = area_chart @recommendation_data, discrete: true, library: {title: {text: 'Recommendation Visible (visits)'}, curveType: 'none', dataOpacity: 0, isStacked: true}
+
+  .container
+    = line_chart @visits_data, library: {title: {text: 'Visits'}, curveType: 'none', colors:['blue','red','green','orange'], dataOpacity: 0, trendlines: {0 =>{type: 'exponential', pointSize: 0}} }, discrete: true
+
+  .container
+    = line_chart @reads_data, discrete: true, library: {title: {text: 'Articles Read'}, curveType: 'none', colors:['blue','red','green','orange'], dataOpacity: 0, trendlines: {0 =>{type: 'exponential', pointSize: 0}}}
+
+  .container
+    = line_chart @avg_data, discrete: true, library: {title: {text: 'Articles Read per Visit'}, curveType: 'none', colors:['red','green','orange'], dataOpacity: 0, trendlines: {0 =>{type: 'exponential', pointSize: 0}}}
+
+  .container
+    = line_chart @lang_data, discrete: true, library: {title: {text: 'Articles Read per Language'}, curveType: 'none', dataOpacity: 0}
