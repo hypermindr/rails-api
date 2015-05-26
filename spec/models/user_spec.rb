@@ -123,28 +123,28 @@ describe User do
 			# puts 'product_models'
 			# Mongoid::default_session[:product_models].find().each{|p| puts p.inspect}
 
-			recommendation = @user2.get_recommended_products(count: 20, algorithm: 'HR1', ids_only: true)
+			recommendation = @user2.get_recommended_products(count: 20, algorithm: 'HRChunks', ids_only: true)
 			expect(recommendation[:success]).to eq(true)
 			expect(recommendation[:products].count).to eq(2)
 			expect(["321","322"]).to include(recommendation[:products][0])
 		end
 
 		it "returns all data" do
-			recommendation = @user2.get_recommended_products(count: 20, algorithm: 'HR1', ids_only: false)
+			recommendation = @user2.get_recommended_products(count: 20, algorithm: 'HRChunks', ids_only: false)
 			expect(recommendation[:success]).to eq(true)
 			expect(recommendation[:products].count).to eq(2)
 			expect(["321","322"]).to include(recommendation[:products][0][:id])
 		end
 
 		it "filters recommendation" do
-			recommendation = @user2.get_recommended_products(count: 20, algorithm: 'HR1', ids_only: true, filter: '{"language":"english"}')
+			recommendation = @user2.get_recommended_products(count: 20, algorithm: 'HRChunks', ids_only: true, filter: '{"language":"english"}')
 			expect(recommendation[:success]).to eq(true)
 			expect(recommendation[:products].count).to eq(1)
 			expect(["321"]).to include(recommendation[:products][0])
 		end
 
 		it "raises error if filter is not valid json" do
-			recommendation = @user2.get_recommended_products(count: 20, algorithm: 'HR1', ids_only: true, filter: 'english')
+			recommendation = @user2.get_recommended_products(count: 20, algorithm: 'HRChunks', ids_only: true, filter: 'english')
 			expect(recommendation[:success]).to eq(false)
 		end
 

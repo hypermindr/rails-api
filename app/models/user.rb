@@ -38,11 +38,11 @@ class User
   validates_presence_of :external_id
 
   def self.algorithm_options_dev
-    ["HR2", "1a", "2a", "3a", "0"]
+    ["HRVoting", "HRChunks", "UBCF", "PBCF", "CB", "POP"]
   end
 
   def self.algorithm_options
-    ["HR2"]
+    ["HRVoting"]
   end
 
   def self.pick_algorithm
