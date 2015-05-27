@@ -25,4 +25,3 @@ config/settings/*.local.yml
 config/environments/*.local.yml
 config/settings.yml
 config/ec2.yml
-script/remote_aws_exec.rb
